@@ -23,5 +23,6 @@ public class User {
     @Column(nullable = false)
     private String password; // hashed
 
+    @Builder.Default
     private String role = "USER"; // simple role
 }

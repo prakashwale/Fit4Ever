@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit4Ever - Fitness Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-dumbbell"></i>
+            <span>Fit4Ever</span>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="#workouts" class="nav-link" data-section="workouts">
+                <i class="fas fa-dumbbell"></i> Workouts
+            </a>
+            <a href="#nutrition" class="nav-link" data-section="nutrition">
+                <i class="fas fa-apple-alt"></i> Nutrition
+            </a>
+            <a href="#goals" class="nav-link" data-section="goals">
+                <i class="fas fa-target"></i> Goals
+            </a>
+            <a href="#profile" class="nav-link" data-section="profile">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <button class="btn btn-outline" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <div class="nav-toggle" onclick="toggleNav()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2 id="authTitle">Welcome to Fit4Ever</h2>
+                    <p id="authSubtitle">Track your fitness journey</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="tab-btn" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <form id="authForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group" id="nameGroup" style="display: none;">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="authSubmitBtn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                
+                <div id="authError" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="section-header">
+                <h1><i class="fas fa-chart-pie"></i> Dashboard</h1>
+                <p>Welcome back! Here's your fitness overview</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalWorkouts">0</h3>
+                        <p>Total Workouts</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="todayCalories">0</h3>
+                        <p>Today's Calories</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-target"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeGoals">0</h3>
+                        <p>Active Goals</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="weekStreak">0</h3>
+                        <p>Week Streak</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-dumbbell"></i> Recent Workouts</h3>
+                        <a href="#workouts" class="btn btn-sm" onclick="showSection('workouts')">View All</a>
+                    </div>
+                    <div class="card-content">
+                        <div id="recentWorkouts" class="recent-list">
+                            <div class="empty-state">
+                                <i class="fas fa-dumbbell"></i>
+                                <p>No workouts yet. Start your fitness journey!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Goal Progress</h3>
+                        <a href="#goals" class="btn btn-sm" onclick="showSection('goals')">Manage Goals</a>
+                    </div>
+                    <div class="card-content">
+                        <div id="goalProgress" class="goals-preview">
+                            <div class="empty-state">
+                                <i class="fas fa-target"></i>
+                                <p>Set your first goal to track progress!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workouts Section -->
+        <section id="workouts" class="content-section">
+            <div class="section-header">
+                <h1><i class="fas fa-dumbbell"></i> Workouts</h1>
+                <button class="btn btn-primary" onclick="showWorkoutModal()">
+                    <i class="fas fa-plus"></i> Add Workout
+                </button>
+            </div>
+            
+            <div class="workouts-grid" id="workoutsGrid">
+                <div class="empty-state">
+                    <i class="fas fa-dumbbell"></i>
+                    <p>No workouts found. Create your first workout!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Section -->
+        <section id="nutrition" class="content-section">
+            <div class="section-header">
+                <h1><i class="fas fa-apple-alt"></i> Nutrition</h1>
+                <button class="btn btn-primary" onclick="showNutritionModal()">
+                    <i class="fas fa-plus"></i> Log Food
+                </button>
+            </div>
+            
+            <div class="nutrition-dashboard">
+                <div class="nutrition-summary card">
+                    <div class="card-header">
+                        <h3>Today's Nutrition</h3>
+                        <input type="date" id="nutritionDate" onchange="loadNutritionByDate()">
+                    </div>
+                    <div class="card-content">
+                        <div class="nutrition-stats">
+                            <div class="nutrition-stat">
+                                <span class="stat-value" id="totalCalories">0</span>
+                                <span class="stat-label">Calories</span>
+                            </div>
+                            <div class="nutrition-stat">
+                                <span class="stat-value" id="totalProtein">0g</span>
+                                <span class="stat-label">Protein</span>
+                            </div>
+                            <div class="nutrition-stat">
+                                <span class="stat-value" id="totalCarbs">0g</span>
+                                <span class="stat-label">Carbs</span>
+                            </div>
+                            <div class="nutrition-stat">
+                                <span class="stat-value" id="totalFat">0g</span>
+                                <span class="stat-label">Fat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-logs card">
+                    <div class="card-header">
+                        <h3>Food Logs</h3>
+                    </div>
+                    <div class="card-content">
+                        <div id="nutritionLogs" class="nutrition-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section id="goals" class="content-section">
+            <div class="section-header">
+                <h1><i class="fas fa-target"></i> Goals</h1>
+                <button class="btn btn-primary" onclick="showGoalModal()">
+                    <i class="fas fa-plus"></i> Add Goal
+                </button>
+            </div>
+            
+            <div class="goals-grid" id="goalsGrid">
+                <div class="empty-state">
+                    <i class="fas fa-target"></i>
+                    <p>No goals set. Create your first goal!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+            <div class="section-header">
+                <h1><i class="fas fa-user"></i> Profile</h1>
+            </div>
+            
+            <div class="profile-card card">
+                <div class="card-content">
+                    <div class="profile-info">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="profile-details">
+                            <h3 id="profileName">Loading...</h3>
+                            <p id="profileEmail">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Workout Modal -->
+    <div id="workoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="workoutModalTitle">Add New Workout</h3>
+                <button class="modal-close" onclick="closeModal('workoutModal')">&times;</button>
+            </div>
+            <form id="workoutForm">
+                <div class="form-group">
+                    <label for="workoutTitle">Title</label>
+                    <input type="text" id="workoutTitle" name="title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workoutDate">Date</label>
+                    <input type="date" id="workoutDate" name="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workoutNotes">Notes</label>
+                    <textarea id="workoutNotes" name="notes" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Exercises</label>
+                    <div id="exercisesList" class="exercises-list">
+                        <div class="exercise-item">
+                            <input type="text" placeholder="Exercise name" name="exerciseName" required>
+                            <input type="number" placeholder="Sets" name="sets" min="1" required>
+                            <input type="number" placeholder="Reps" name="reps" min="1" required>
+                            <input type="number" placeholder="Weight (kg)" name="weight" min="0" step="0.5">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline" onclick="addExercise()">
+                        <i class="fas fa-plus"></i> Add Exercise
+                    </button>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('workoutModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Workout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Nutrition Modal -->
+    <div id="nutritionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Log Food</h3>
+                <button class="modal-close" onclick="closeModal('nutritionModal')">&times;</button>
+            </div>
+            <form id="nutritionForm">
+                <div class="form-group">
+                    <label for="foodDate">Date</label>
+                    <input type="date" id="foodDate" name="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mealType">Meal Type</label>
+                    <select id="mealType" name="mealType" required>
+                        <option value="">Select meal type</option>
+                        <option value="BREAKFAST">Breakfast</option>
+                        <option value="LUNCH">Lunch</option>
+                        <option value="DINNER">Dinner</option>
+                        <option value="SNACK">Snack</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="itemName">Food Item</label>
+                    <input type="text" id="itemName" name="itemName" required>
+                </div>
+                
+                <div class="nutrition-inputs">
+                    <div class="form-group">
+                        <label for="calories">Calories</label>
+                        <input type="number" id="calories" name="calories" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="protein">Protein (g)</label>
+                        <input type="number" id="protein" name="protein" min="0" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carbs">Carbs (g)</label>
+                        <input type="number" id="carbs" name="carbs" min="0" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fat">Fat (g)</label>
+                        <input type="number" id="fat" name="fat" min="0" step="0.1" required>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('nutritionModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Log Food</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Goal</h3>
+                <button class="modal-close" onclick="closeModal('goalModal')">&times;</button>
+            </div>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label for="goalType">Goal Type</label>
+                    <select id="goalType" name="type" required>
+                        <option value="">Select goal type</option>
+                        <option value="WEIGHT">Weight Goal</option>
+                        <option value="WORKOUTS_PER_WEEK">Workouts Per Week</option>
+                        <option value="CALORIES">Daily Calories</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="targetValue">Target Value</label>
+                    <input type="number" id="targetValue" name="targetValue" min="0" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate" name="startDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate" name="endDate" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('goalModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

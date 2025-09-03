@@ -38,3 +38,5 @@ public class Workout {
     @Builder.Default
     private List<Exercise> exercises = new ArrayList<>();
 }
+
+ 
