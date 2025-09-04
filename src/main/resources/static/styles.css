@@ -274,22 +274,24 @@ body {
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-weight: 600;
     color: var(--text-primary);
+    font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     background: var(--dark-bg);
     color: var(--text-primary);
     font-size: 0.875rem;
     transition: var(--transition);
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -298,6 +300,12 @@ body {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: var(--card-bg);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
 }
 
 /* Modals */
@@ -323,11 +331,15 @@ body {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
+}
+
+.modal-content form {
+    padding: 1.5rem;
 }
 
 .modal-header {
@@ -451,15 +463,41 @@ body {
 
 .exercise-item {
     display: grid;
-    grid-template-columns: 1fr auto auto auto auto;
-    gap: 0.5rem;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 1rem;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--dark-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
 }
 
 .exercise-item input {
-    padding: 0.5rem;
+    padding: 0.75rem;
     font-size: 0.875rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.exercise-item input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.exercises-list {
+    margin-bottom: 1rem;
+}
+
+.exercise-item label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 /* Nutrition */
