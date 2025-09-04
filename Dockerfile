@@ -1,29 +1,40 @@
-# Use OpenJDK 17 as base image
-FROM openjdk:17-jdk-slim
+# Multi-stage build for smaller image
+FROM maven:3.9.4-openjdk-17 AS build
 
 # Set working directory
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY mvnw .
-COPY mvnw.cmd .
+# Copy pom.xml and download dependencies (for better caching)
 COPY pom.xml .
-COPY .mvn .mvn
+RUN mvn dependency:go-offline -B
 
-# Download dependencies
-RUN ./mvnw dependency:go-offline -B
+# Copy source code and build
+COPY src ./src
+RUN mvn clean package -DskipTests -B
 
-# Copy source code
-COPY src src
+# Runtime stage
+FROM openjdk:17-jre-slim
 
-# Build the application
-RUN ./mvnw clean package -DskipTests
+# Create non-root user for security
+RUN addgroup --system spring && adduser --system spring --ingroup spring
+USER spring:spring
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built jar from build stage
+COPY --from=build /app/target/fit4ever-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port
 EXPOSE 8080
 
-# Set environment variables
+# Set JVM options for Railway
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
 ENV SPRING_PROFILES_ACTIVE=prod
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/actuator/health || exit 1
+
 # Run the application
-CMD ["java", "-jar", "target/fit4ever-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
