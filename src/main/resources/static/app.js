@@ -1,7 +1,11 @@
 // Fit4Ever Frontend Application
 class Fit4EverApp {
     constructor() {
-        this.baseURL = 'http://localhost:8080/api';
+        // Use the current domain for the API URL, fallback to localhost for development
+        const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        this.baseURL = isDevelopment 
+            ? 'http://localhost:8080/api' 
+            : `${window.location.protocol}//${window.location.host}/api`;
         this.token = localStorage.getItem('fit4ever_token');
         this.user = null;
         this.currentSection = 'dashboard';
