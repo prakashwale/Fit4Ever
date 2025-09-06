@@ -327,8 +327,8 @@ class Fit4EverApp {
                             workout.exercises.slice(0, 3).map(exercise => `
                                 <div class="exercise-preview">
                                     <span class="exercise-name">${exercise.name}</span>
-                                    <span class="exercise-details">${exercise.setsCount} sets × ${exercise.repsPerSet} reps</span>
-                                    ${exercise.weight ? `<span class="exercise-weight">@ ${exercise.weight}kg</span>` : ''}
+                                    <span class="exercise-details">${exercise.setsCount} sets × ${this.formatReps(exercise)}</span>
+                                    ${this.formatWeight(exercise) ? `<span class="exercise-weight">@ ${this.formatWeight(exercise)}</span>` : ''}
                                 </div>
                             `).join('') + 
                             (workout.exercises.length > 3 ? `<div class="more-exercises">+${workout.exercises.length - 3} more exercises</div>` : '')
@@ -372,8 +372,22 @@ class Fit4EverApp {
                     
                     lastItem.querySelector('[name="exerciseName"]').value = exercise.name;
                     lastItem.querySelector('[name="sets"]').value = exercise.setsCount;
-                    lastItem.querySelector('[name="reps"]').value = exercise.repsPerSet;
-                    lastItem.querySelector('[name="weight"]').value = exercise.weight || '';
+                    
+                    // Handle reps (range or single value)
+                    if (exercise.minReps && exercise.maxReps) {
+                        lastItem.querySelector('[name="minReps"]').value = exercise.minReps;
+                        lastItem.querySelector('[name="maxReps"]').value = exercise.maxReps;
+                    } else if (exercise.repsPerSet) {
+                        lastItem.querySelector('[name="minReps"]').value = exercise.repsPerSet;
+                    }
+                    
+                    // Handle weight (range or single value)
+                    if (exercise.minWeight && exercise.maxWeight) {
+                        lastItem.querySelector('[name="minWeight"]').value = exercise.minWeight;
+                        lastItem.querySelector('[name="maxWeight"]').value = exercise.maxWeight;
+                    } else if (exercise.weight) {
+                        lastItem.querySelector('[name="minWeight"]').value = exercise.weight;
+                    }
                 });
             } else {
                 // Add one empty exercise if none exist
@@ -409,8 +423,16 @@ class Fit4EverApp {
             <div class="exercise-item">
                 <input type="text" placeholder="Exercise name" name="exerciseName" required>
                 <input type="number" placeholder="Sets" name="sets" min="1" required>
-                <input type="number" placeholder="Reps" name="reps" min="1" required>
-                <input type="number" placeholder="Weight (kg)" name="weight" min="0" step="0.5">
+                <div class="range-inputs">
+                    <input type="number" placeholder="Min Reps" name="minReps" min="1">
+                    <span class="range-separator">-</span>
+                    <input type="number" placeholder="Max Reps" name="maxReps" min="1">
+                </div>
+                <div class="range-inputs">
+                    <input type="number" placeholder="Min Weight (kg)" name="minWeight" min="0" step="0.5">
+                    <span class="range-separator">-</span>
+                    <input type="number" placeholder="Max Weight (kg)" name="maxWeight" min="0" step="0.5">
+                </div>
                 <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
                     <i class="fas fa-trash"></i>
                 </button>
@@ -468,16 +490,38 @@ class Fit4EverApp {
         exerciseItems.forEach(item => {
             const name = item.querySelector('[name="exerciseName"]').value;
             const sets = item.querySelector('[name="sets"]').value;
-            const reps = item.querySelector('[name="reps"]').value;
-            const weight = item.querySelector('[name="weight"]').value;
+            const minReps = item.querySelector('[name="minReps"]').value;
+            const maxReps = item.querySelector('[name="maxReps"]').value;
+            const minWeight = item.querySelector('[name="minWeight"]').value;
+            const maxWeight = item.querySelector('[name="maxWeight"]').value;
             
-            if (name && sets && reps) {
-                exercises.push({
+            if (name && sets && (minReps || maxReps)) {
+                const exercise = {
                     name: name,
-                    setsCount: parseInt(sets),
-                    repsPerSet: parseInt(reps),
-                    weight: weight ? parseFloat(weight) : 0
-                });
+                    setsCount: parseInt(sets)
+                };
+                
+                // Handle reps (range or single value)
+                if (minReps && maxReps) {
+                    exercise.minReps = parseInt(minReps);
+                    exercise.maxReps = parseInt(maxReps);
+                } else if (minReps) {
+                    exercise.repsPerSet = parseInt(minReps); // Backward compatibility
+                } else if (maxReps) {
+                    exercise.repsPerSet = parseInt(maxReps); // Backward compatibility
+                }
+                
+                // Handle weight (range or single value)
+                if (minWeight && maxWeight) {
+                    exercise.minWeight = parseFloat(minWeight);
+                    exercise.maxWeight = parseFloat(maxWeight);
+                } else if (minWeight) {
+                    exercise.weight = parseFloat(minWeight); // Backward compatibility
+                } else if (maxWeight) {
+                    exercise.weight = parseFloat(maxWeight); // Backward compatibility
+                }
+                
+                exercises.push(exercise);
             }
         });
         
@@ -491,8 +535,16 @@ class Fit4EverApp {
         exerciseItem.innerHTML = `
             <input type="text" placeholder="Exercise name" name="exerciseName" required>
             <input type="number" placeholder="Sets" name="sets" min="1" required>
-            <input type="number" placeholder="Reps" name="reps" min="1" required>
-            <input type="number" placeholder="Weight (kg)" name="weight" min="0" step="0.5">
+            <div class="range-inputs">
+                <input type="number" placeholder="Min Reps" name="minReps" min="1">
+                <span class="range-separator">-</span>
+                <input type="number" placeholder="Max Reps" name="maxReps" min="1">
+            </div>
+            <div class="range-inputs">
+                <input type="number" placeholder="Min Weight (kg)" name="minWeight" min="0" step="0.5">
+                <span class="range-separator">-</span>
+                <input type="number" placeholder="Max Weight (kg)" name="maxWeight" min="0" step="0.5">
+            </div>
             <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
                 <i class="fas fa-trash"></i>
             </button>
@@ -509,6 +561,32 @@ class Fit4EverApp {
         } else {
             this.showToast('You must have at least one exercise', 'warning');
         }
+    }
+
+    formatReps(exercise) {
+        if (exercise.minReps && exercise.maxReps) {
+            return `${exercise.minReps}-${exercise.maxReps} reps`;
+        } else if (exercise.repsPerSet) {
+            return `${exercise.repsPerSet} reps`;
+        } else if (exercise.minReps) {
+            return `${exercise.minReps}+ reps`;
+        } else if (exercise.maxReps) {
+            return `up to ${exercise.maxReps} reps`;
+        }
+        return 'reps';
+    }
+
+    formatWeight(exercise) {
+        if (exercise.minWeight && exercise.maxWeight) {
+            return `${exercise.minWeight}-${exercise.maxWeight}kg`;
+        } else if (exercise.weight) {
+            return `${exercise.weight}kg`;
+        } else if (exercise.minWeight) {
+            return `${exercise.minWeight}+kg`;
+        } else if (exercise.maxWeight) {
+            return `up to ${exercise.maxWeight}kg`;
+        }
+        return null;
     }
 
     // Nutrition Methods

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fit4Ever - Fitness Dashboard</title>
-    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=5">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -296,8 +296,16 @@
                         <div class="exercise-item">
                             <input type="text" placeholder="Exercise name" name="exerciseName" required>
                             <input type="number" placeholder="Sets" name="sets" min="1" required>
-                            <input type="number" placeholder="Reps" name="reps" min="1" required>
-                            <input type="number" placeholder="Weight (kg)" name="weight" min="0" step="0.5">
+                            <div class="range-inputs">
+                                <input type="number" placeholder="Min Reps" name="minReps" min="1">
+                                <span class="range-separator">-</span>
+                                <input type="number" placeholder="Max Reps" name="maxReps" min="1">
+                            </div>
+                            <div class="range-inputs">
+                                <input type="number" placeholder="Min Weight (kg)" name="minWeight" min="0" step="0.5">
+                                <span class="range-separator">-</span>
+                                <input type="number" placeholder="Max Weight (kg)" name="maxWeight" min="0" step="0.5">
+                            </div>
                             <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
                                 <i class="fas fa-trash"></i>
                             </button>

@@ -14,8 +14,14 @@ public final class WorkoutDtos {
     public static class ExerciseInput {
         private String name;
         private Integer setsCount;
-        private Integer repsPerSet;
-        private Double weight;
+        private Integer repsPerSet; // Keep for backward compatibility
+        private Double weight; // Keep for backward compatibility
+        
+        // Range support
+        private Integer minReps;
+        private Integer maxReps;
+        private Double minWeight;
+        private Double maxWeight;
     }
 
     @Data
@@ -48,8 +54,14 @@ public final class WorkoutDtos {
         private Long id;
         private String name;
         private Integer setsCount;
-        private Integer repsPerSet;
-        private Double weight;
+        private Integer repsPerSet; // Keep for backward compatibility
+        private Double weight; // Keep for backward compatibility
+        
+        // Range support
+        private Integer minReps;
+        private Integer maxReps;
+        private Double minWeight;
+        private Double maxWeight;
     }
 
     @Data

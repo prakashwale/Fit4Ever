@@ -542,7 +542,7 @@ body {
 
 .exercise-item {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    grid-template-columns: 2fr 1fr 2fr 2fr auto;
     gap: 1rem;
     align-items: center;
     margin-bottom: 1rem;
@@ -550,6 +550,23 @@ body {
     background: var(--dark-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
+}
+
+.range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.range-inputs input {
+    flex: 1;
+    min-width: 0;
+}
+
+.range-separator {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .exercise-item input {
@@ -953,6 +970,15 @@ body {
     .exercise-item {
         grid-template-columns: 1fr;
         gap: 0.5rem;
+    }
+    
+    .range-inputs {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .range-separator {
+        display: none;
     }
 
     .modal-content {

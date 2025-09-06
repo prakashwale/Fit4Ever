@@ -22,8 +22,14 @@ public class Exercise {
     private String name;
 
     private Integer setsCount;
-    private Integer repsPerSet;
-    private Double weight;
+    private Integer repsPerSet; // Keep for backward compatibility
+    private Double weight; // Keep for backward compatibility
+    
+    // Range support
+    private Integer minReps;
+    private Integer maxReps;
+    private Double minWeight;
+    private Double maxWeight;
 }
 
 

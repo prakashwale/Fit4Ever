@@ -44,6 +44,10 @@ public class WorkoutService {
                         .setsCount(ex.getSetsCount())
                         .repsPerSet(ex.getRepsPerSet())
                         .weight(ex.getWeight())
+                        .minReps(ex.getMinReps())
+                        .maxReps(ex.getMaxReps())
+                        .minWeight(ex.getMinWeight())
+                        .maxWeight(ex.getMaxWeight())
                         .build();
                 workout.getExercises().add(e);
             }
@@ -68,6 +72,10 @@ public class WorkoutService {
                                 .setsCount(e.getSetsCount())
                                 .repsPerSet(e.getRepsPerSet())
                                 .weight(e.getWeight())
+                                .minReps(e.getMinReps())
+                                .maxReps(e.getMaxReps())
+                                .minWeight(e.getMinWeight())
+                                .maxWeight(e.getMaxWeight())
                                 .build()).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
@@ -101,6 +109,10 @@ public class WorkoutService {
                         .setsCount(ex.getSetsCount())
                         .repsPerSet(ex.getRepsPerSet())
                         .weight(ex.getWeight())
+                        .minReps(ex.getMinReps())
+                        .maxReps(ex.getMaxReps())
+                        .minWeight(ex.getMinWeight())
+                        .maxWeight(ex.getMaxWeight())
                         .build();
                 workout.getExercises().add(e);
             }
@@ -130,6 +142,10 @@ public class WorkoutService {
                         .setsCount(e.getSetsCount())
                         .repsPerSet(e.getRepsPerSet())
                         .weight(e.getWeight())
+                        .minReps(e.getMinReps())
+                        .maxReps(e.getMaxReps())
+                        .minWeight(e.getMinWeight())
+                        .maxWeight(e.getMaxWeight())
                         .build()).collect(Collectors.toList()))
                 .build();
     }
