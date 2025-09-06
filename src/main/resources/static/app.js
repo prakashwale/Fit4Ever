@@ -9,6 +9,7 @@ class Fit4EverApp {
         this.token = localStorage.getItem('fit4ever_token');
         this.user = null;
         this.currentSection = 'dashboard';
+        this.editingWorkoutId = null; // Track which workout is being edited
         
         this.init();
     }
@@ -351,7 +352,10 @@ class Fit4EverApp {
         try {
             const workout = await this.apiCall(`/workouts/${id}`, 'GET');
             
-            // Populate form for viewing/editing
+            // Set editing state
+            this.editingWorkoutId = id;
+            
+            // Populate form for editing
             document.getElementById('workoutTitle').value = workout.title;
             document.getElementById('workoutDate').value = workout.date;
             document.getElementById('workoutNotes').value = workout.notes || '';
@@ -360,16 +364,21 @@ class Fit4EverApp {
             document.getElementById('exercisesList').innerHTML = '';
             
             // Add exercises
-            workout.exercises.forEach(exercise => {
+            if (workout.exercises && workout.exercises.length > 0) {
+                workout.exercises.forEach(exercise => {
+                    this.addExercise();
+                    const exerciseItems = document.querySelectorAll('.exercise-item');
+                    const lastItem = exerciseItems[exerciseItems.length - 1];
+                    
+                    lastItem.querySelector('[name="exerciseName"]').value = exercise.name;
+                    lastItem.querySelector('[name="sets"]').value = exercise.setsCount;
+                    lastItem.querySelector('[name="reps"]').value = exercise.repsPerSet;
+                    lastItem.querySelector('[name="weight"]').value = exercise.weight || '';
+                });
+            } else {
+                // Add one empty exercise if none exist
                 this.addExercise();
-                const exerciseItems = document.querySelectorAll('.exercise-item');
-                const lastItem = exerciseItems[exerciseItems.length - 1];
-                
-                lastItem.querySelector('[name="exerciseName"]').value = exercise.name;
-                lastItem.querySelector('[name="sets"]').value = exercise.setsCount;
-                lastItem.querySelector('[name="reps"]').value = exercise.repsPerSet;
-                lastItem.querySelector('[name="weight"]').value = exercise.weight || '';
-            });
+            }
             
             document.getElementById('workoutModalTitle').textContent = 'Edit Workout';
             this.showModal('workoutModal');
@@ -391,6 +400,9 @@ class Fit4EverApp {
     }
 
     showWorkoutModal() {
+        // Reset editing state for new workout
+        this.editingWorkoutId = null;
+        
         document.getElementById('workoutModalTitle').textContent = 'Add New Workout';
         document.getElementById('workoutForm').reset();
         document.getElementById('exercisesList').innerHTML = `
@@ -428,12 +440,22 @@ class Fit4EverApp {
         
         try {
             this.showLoading();
-            await this.apiCall('/workouts', 'POST', workoutData);
+            
+            if (this.editingWorkoutId) {
+                // Update existing workout
+                await this.apiCall(`/workouts/${this.editingWorkoutId}`, 'PUT', workoutData);
+                this.showToast('Workout updated successfully!', 'success');
+            } else {
+                // Create new workout
+                await this.apiCall('/workouts', 'POST', workoutData);
+                this.showToast('Workout created successfully!', 'success');
+            }
+            
             this.closeModal('workoutModal');
-            this.showToast('Workout created successfully!', 'success');
+            this.editingWorkoutId = null; // Reset editing state
             await this.loadWorkouts();
         } catch (error) {
-            this.showToast('Failed to create workout', 'error');
+            this.showToast(`Failed to ${this.editingWorkoutId ? 'update' : 'create'} workout`, 'error');
         } finally {
             this.hideLoading();
         }

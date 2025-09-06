@@ -60,7 +60,15 @@ public class WorkoutService {
                 .map(w -> WorkoutSummary.builder()
                         .id(w.getId())
                         .title(w.getTitle())
+                        .notes(w.getNotes())
                         .date(w.getDate())
+                        .exercises(w.getExercises().stream().map(e -> ExerciseResponse.builder()
+                                .id(e.getId())
+                                .name(e.getName())
+                                .setsCount(e.getSetsCount())
+                                .repsPerSet(e.getRepsPerSet())
+                                .weight(e.getWeight())
+                                .build()).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
     }

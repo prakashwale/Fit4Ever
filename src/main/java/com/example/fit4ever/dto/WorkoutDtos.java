@@ -59,7 +59,9 @@ public final class WorkoutDtos {
     public static class WorkoutSummary {
         private Long id;
         private String title;
+        private String notes;
         private LocalDate date;
+        private List<ExerciseResponse> exercises;
     }
 
     @Data
