@@ -421,21 +421,39 @@ class Fit4EverApp {
         document.getElementById('workoutForm').reset();
         document.getElementById('exercisesList').innerHTML = `
             <div class="exercise-item">
-                <input type="text" placeholder="Exercise name" name="exerciseName" required>
-                <input type="number" placeholder="Sets" name="sets" min="1" required>
-                <div class="range-inputs">
-                    <input type="number" placeholder="Min Reps" name="minReps" min="1">
-                    <span class="range-separator">-</span>
-                    <input type="number" placeholder="Max Reps" name="maxReps" min="1">
+                <div class="exercise-name-group">
+                    <label class="field-label">Exercise Name</label>
+                    <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
                 </div>
-                <div class="range-inputs">
-                    <input type="number" placeholder="Min Weight (kg)" name="minWeight" min="0" step="0.5">
-                    <span class="range-separator">-</span>
-                    <input type="number" placeholder="Max Weight (kg)" name="maxWeight" min="0" step="0.5">
+                
+                <div class="exercise-sets-group">
+                    <label class="field-label">Sets</label>
+                    <input type="number" placeholder="3" name="sets" min="1" required>
                 </div>
-                <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
-                    <i class="fas fa-trash"></i>
-                </button>
+                
+                <div class="exercise-reps-group">
+                    <label class="field-label">Reps Range</label>
+                    <div class="range-container">
+                        <input type="number" placeholder="8" name="minReps" min="1" title="Minimum reps">
+                        <span class="range-dash">to</span>
+                        <input type="number" placeholder="12" name="maxReps" min="1" title="Maximum reps">
+                    </div>
+                </div>
+                
+                <div class="exercise-weight-group">
+                    <label class="field-label">Weight Range (kg)</label>
+                    <div class="range-container">
+                        <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Minimum weight">
+                        <span class="range-dash">to</span>
+                        <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Maximum weight">
+                    </div>
+                </div>
+                
+                <div class="exercise-actions">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)" title="Remove exercise">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </div>
         `;
         this.setTodayDate();
@@ -533,21 +551,39 @@ class Fit4EverApp {
         const exerciseItem = document.createElement('div');
         exerciseItem.className = 'exercise-item';
         exerciseItem.innerHTML = `
-            <input type="text" placeholder="Exercise name" name="exerciseName" required>
-            <input type="number" placeholder="Sets" name="sets" min="1" required>
-            <div class="range-inputs">
-                <input type="number" placeholder="Min Reps" name="minReps" min="1">
-                <span class="range-separator">-</span>
-                <input type="number" placeholder="Max Reps" name="maxReps" min="1">
+            <div class="exercise-name-group">
+                <label class="field-label">Exercise Name</label>
+                <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
             </div>
-            <div class="range-inputs">
-                <input type="number" placeholder="Min Weight (kg)" name="minWeight" min="0" step="0.5">
-                <span class="range-separator">-</span>
-                <input type="number" placeholder="Max Weight (kg)" name="maxWeight" min="0" step="0.5">
+            
+            <div class="exercise-sets-group">
+                <label class="field-label">Sets</label>
+                <input type="number" placeholder="3" name="sets" min="1" required>
             </div>
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)">
-                <i class="fas fa-trash"></i>
-            </button>
+            
+            <div class="exercise-reps-group">
+                <label class="field-label">Reps Range</label>
+                <div class="range-container">
+                    <input type="number" placeholder="8" name="minReps" min="1" title="Minimum reps">
+                    <span class="range-dash">to</span>
+                    <input type="number" placeholder="12" name="maxReps" min="1" title="Maximum reps">
+                </div>
+            </div>
+            
+            <div class="exercise-weight-group">
+                <label class="field-label">Weight Range (kg)</label>
+                <div class="range-container">
+                    <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Minimum weight">
+                    <span class="range-dash">to</span>
+                    <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Maximum weight">
+                </div>
+            </div>
+            
+            <div class="exercise-actions">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)" title="Remove exercise">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         `;
         container.appendChild(exerciseItem);
     }

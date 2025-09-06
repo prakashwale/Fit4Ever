@@ -542,31 +542,56 @@ body {
 
 .exercise-item {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr 2fr auto;
-    gap: 1rem;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding: 1rem;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
     background: var(--dark-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
 }
 
-.range-inputs {
+.exercise-name-group,
+.exercise-sets-group,
+.exercise-reps-group,
+.exercise-weight-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 0.5rem;
 }
 
-.range-inputs input {
-    flex: 1;
-    min-width: 0;
+.field-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
 }
 
-.range-separator {
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.range-container input {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.range-dash {
     color: var(--text-secondary);
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.exercise-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1.5rem;
 }
 
 .exercise-item input {
@@ -969,15 +994,21 @@ body {
 
     .exercise-item {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .exercise-actions {
+        padding-top: 0;
+        justify-content: flex-start;
+    }
+    
+    .range-container {
+        flex-direction: column;
         gap: 0.5rem;
     }
     
-    .range-inputs {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-    
-    .range-separator {
+    .range-dash {
         display: none;
     }
 
