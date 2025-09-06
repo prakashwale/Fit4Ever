@@ -4,13 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fit4Ever - Fitness Dashboard</title>
-    <!-- Version: Fixed Modal Height with Sticky Buttons v9 -->
-    <link rel="stylesheet" href="styles.css?v=9">
+    <!-- Version: Beautiful Landing Page with Features v10 -->
+    <link rel="stylesheet" href="styles.css?v=10">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Landing Navigation -->
+    <nav class="landing-navbar" id="landingNavbar">
+        <div class="nav-brand">
+            <i class="fas fa-dumbbell"></i>
+            <span>Fit4Ever</span>
+        </div>
+        <div class="landing-nav-menu">
+            <button class="btn btn-outline" onclick="showAuthModal('login')">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn btn-primary" onclick="showAuthModal('register')">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+        </div>
+    </nav>
+
+    <!-- App Navigation (Hidden initially) -->
+    <nav class="navbar" id="appNavbar" style="display: none;">
         <div class="nav-brand">
             <i class="fas fa-dumbbell"></i>
             <span>Fit4Ever</span>
@@ -39,6 +55,108 @@
             <i class="fas fa-bars"></i>
         </div>
     </nav>
+
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Transform Your Fitness Journey with 
+                        <span class="highlight">Fit4Ever</span>
+                    </h1>
+                    <p class="hero-description">
+                        The complete fitness management platform that helps you track workouts, 
+                        monitor nutrition, set goals, and achieve lasting results. Your personal 
+                        fitness companion for a healthier, stronger you.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="showAuthModal('register')">
+                            <i class="fas fa-rocket"></i> Get Started Free
+                        </button>
+                        <button class="btn btn-outline btn-large" onclick="showAuthModal('login')">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <i class="fas fa-chart-line hero-icon"></i>
+                        <h3>Track Progress</h3>
+                        <p>Monitor your fitness journey with detailed analytics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-container">
+                <h2 class="section-title">Everything You Need to Succeed</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h3>Workout Tracking</h3>
+                        <p>Log exercises, sets, reps, and weights. Track your progress with detailed workout history and performance analytics.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <h3>Nutrition Management</h3>
+                        <p>Track calories, macros, and meals. Monitor your daily nutrition intake to fuel your fitness goals effectively.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-target"></i>
+                        </div>
+                        <h3>Goal Setting</h3>
+                        <p>Set SMART fitness goals and track your progress. Stay motivated with milestone achievements and progress insights.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Visualize your progress with comprehensive charts and statistics. Make data-driven decisions for better results.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Optimized</h3>
+                        <p>Access your fitness data anywhere, anytime. Fully responsive design that works perfectly on all devices.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure & Private</h3>
+                        <p>Your data is protected with enterprise-grade security. JWT authentication ensures your information stays safe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Ready to Start Your Fitness Journey?</h2>
+                <p>Join thousands of users who are already transforming their lives with Fit4Ever</p>
+                <button class="btn btn-primary btn-large" onclick="showAuthModal('register')">
+                    <i class="fas fa-user-plus"></i> Create Free Account
+                </button>
+            </div>
+        </section>
+    </div>
 
     <!-- Auth Modal -->
     <div id="authModal" class="modal">
@@ -80,8 +198,8 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
+    <!-- Main Content (Hidden initially) -->
+    <main class="main-content" id="appContent" style="display: none;">
         <!-- Dashboard Section -->
         <section id="dashboard" class="content-section active">
             <div class="section-header">

@@ -21,15 +21,29 @@ class Fit4EverApp {
         if (this.token) {
             try {
                 await this.loadUserProfile();
-                this.showMainApp();
+                this.showApp();
                 await this.loadDashboard();
             } catch (error) {
                 console.error('Token validation failed:', error);
                 this.logout();
             }
         } else {
-            this.showAuthModal();
+            this.showLandingPage();
         }
+    }
+
+    showLandingPage() {
+        document.getElementById('landingPage').style.display = 'block';
+        document.getElementById('landingNavbar').style.display = 'flex';
+        document.getElementById('appContent').style.display = 'none';
+        document.getElementById('appNavbar').style.display = 'none';
+    }
+
+    showApp() {
+        document.getElementById('landingPage').style.display = 'none';
+        document.getElementById('landingNavbar').style.display = 'none';
+        document.getElementById('appContent').style.display = 'block';
+        document.getElementById('appNavbar').style.display = 'flex';
     }
 
     setupEventListeners() {
@@ -97,7 +111,7 @@ class Fit4EverApp {
             
             await this.loadUserProfile();
             this.hideAuthModal();
-            this.showMainApp();
+            this.showApp();
             this.showToast('Authentication successful!', 'success');
             await this.loadDashboard();
         } catch (error) {
@@ -143,8 +157,7 @@ class Fit4EverApp {
         localStorage.removeItem('fit4ever_token');
         this.token = null;
         this.user = null;
-        this.showAuthModal();
-        this.hideMainApp();
+        this.showLandingPage();
         this.showToast('Logged out successfully', 'success');
     }
 
@@ -899,8 +912,19 @@ class Fit4EverApp {
         document.body.style.overflow = 'auto';
     }
 
-    showAuthModal() {
+    showAuthModal(mode = 'login') {
+        // Set the auth mode (login or register)
+        this.setAuthMode(mode);
         this.showModal('authModal');
+        
+        // Prevent modal from closing when clicking outside
+        const modal = document.getElementById('authModal');
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                e.stopPropagation();
+                // Don't close the modal
+            }
+        };
     }
 
     hideAuthModal() {
@@ -965,6 +989,10 @@ function switchAuthTab(tab) {
 
 function logout() {
     app.logout();
+}
+
+function showAuthModal(mode) {
+    app.showAuthModal(mode);
 }
 
 function showSection(section) {
