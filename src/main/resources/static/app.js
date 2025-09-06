@@ -320,9 +320,23 @@ class Fit4EverApp {
                 </div>
                 <div class="workout-content">
                     <p class="workout-notes">${workout.notes || 'No notes'}</p>
+                    <div class="workout-exercises">
+                        <h4>Exercises (${workout.exercises ? workout.exercises.length : 0})</h4>
+                        ${workout.exercises && workout.exercises.length > 0 ? 
+                            workout.exercises.slice(0, 3).map(exercise => `
+                                <div class="exercise-preview">
+                                    <span class="exercise-name">${exercise.name}</span>
+                                    <span class="exercise-details">${exercise.setsCount} sets × ${exercise.repsPerSet} reps</span>
+                                    ${exercise.weight ? `<span class="exercise-weight">@ ${exercise.weight}kg</span>` : ''}
+                                </div>
+                            `).join('') + 
+                            (workout.exercises.length > 3 ? `<div class="more-exercises">+${workout.exercises.length - 3} more exercises</div>` : '')
+                            : '<div class="no-exercises">No exercises added</div>'
+                        }
+                    </div>
                     <div class="workout-actions">
                         <button class="btn btn-sm btn-outline" onclick="app.viewWorkout(${workout.id})">
-                            <i class="fas fa-eye"></i> View
+                            <i class="fas fa-edit"></i> Edit
                         </button>
                         <button class="btn btn-sm btn-danger" onclick="app.deleteWorkout(${workout.id})">
                             <i class="fas fa-trash"></i> Delete
@@ -357,7 +371,7 @@ class Fit4EverApp {
                 lastItem.querySelector('[name="weight"]').value = exercise.weight || '';
             });
             
-            document.getElementById('workoutModalTitle').textContent = 'View Workout';
+            document.getElementById('workoutModalTitle').textContent = 'Edit Workout';
             this.showModal('workoutModal');
         } catch (error) {
             this.showToast('Failed to load workout details', 'error');

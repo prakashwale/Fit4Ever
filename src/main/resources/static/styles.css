@@ -477,6 +477,69 @@ body {
     padding: 1rem 1.5rem;
 }
 
+.workout-exercises h4 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.workout-exercises h4::before {
+    content: "🏋️";
+    font-size: 1rem;
+}
+
+.exercise-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.exercise-preview:last-child {
+    border-bottom: none;
+}
+
+.exercise-name {
+    color: var(--text-primary);
+    font-weight: 500;
+    flex: 1;
+}
+
+.exercise-details {
+    color: var(--text-secondary);
+    margin-right: 0.5rem;
+}
+
+.exercise-weight {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.more-exercises {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+    text-align: center;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.no-exercises {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 1rem 0;
+    font-style: italic;
+}
+
 .exercise-item {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr auto;
