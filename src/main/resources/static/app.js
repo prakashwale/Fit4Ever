@@ -421,31 +421,33 @@ class Fit4EverApp {
         document.getElementById('workoutForm').reset();
         document.getElementById('exercisesList').innerHTML = `
             <div class="exercise-item">
-                <div class="exercise-name-group">
-                    <label class="field-label">Exercise Name</label>
-                    <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
-                </div>
-                
-                <div class="exercise-sets-group">
-                    <label class="field-label">Sets</label>
-                    <input type="number" placeholder="3" name="sets" min="1" required>
-                </div>
-                
-                <div class="exercise-reps-group">
-                    <label class="field-label">Reps Range</label>
-                    <div class="range-container">
-                        <input type="number" placeholder="8" name="minReps" min="1" title="Minimum reps">
-                        <span class="range-dash">to</span>
-                        <input type="number" placeholder="12" name="maxReps" min="1" title="Maximum reps">
+                <div class="exercise-grid">
+                    <div class="exercise-field">
+                        <label class="field-label">Exercise Name</label>
+                        <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
                     </div>
-                </div>
-                
-                <div class="exercise-weight-group">
-                    <label class="field-label">Weight Range (kg)</label>
-                    <div class="range-container">
-                        <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Minimum weight">
-                        <span class="range-dash">to</span>
-                        <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Maximum weight">
+                    
+                    <div class="exercise-field">
+                        <label class="field-label">Sets</label>
+                        <input type="number" placeholder="3" name="sets" min="1" required>
+                    </div>
+                    
+                    <div class="exercise-field">
+                        <label class="field-label">Reps Range</label>
+                        <div class="range-inputs">
+                            <input type="number" placeholder="8" name="minReps" min="1" title="Min reps">
+                            <span class="range-separator">-</span>
+                            <input type="number" placeholder="12" name="maxReps" min="1" title="Max reps">
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-field">
+                        <label class="field-label">Weight Range (kg)</label>
+                        <div class="range-inputs">
+                            <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Min weight">
+                            <span class="range-separator">-</span>
+                            <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Max weight">
+                        </div>
                     </div>
                 </div>
                 
@@ -551,31 +553,33 @@ class Fit4EverApp {
         const exerciseItem = document.createElement('div');
         exerciseItem.className = 'exercise-item';
         exerciseItem.innerHTML = `
-            <div class="exercise-name-group">
-                <label class="field-label">Exercise Name</label>
-                <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
-            </div>
-            
-            <div class="exercise-sets-group">
-                <label class="field-label">Sets</label>
-                <input type="number" placeholder="3" name="sets" min="1" required>
-            </div>
-            
-            <div class="exercise-reps-group">
-                <label class="field-label">Reps Range</label>
-                <div class="range-container">
-                    <input type="number" placeholder="8" name="minReps" min="1" title="Minimum reps">
-                    <span class="range-dash">to</span>
-                    <input type="number" placeholder="12" name="maxReps" min="1" title="Maximum reps">
+            <div class="exercise-grid">
+                <div class="exercise-field">
+                    <label class="field-label">Exercise Name</label>
+                    <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
                 </div>
-            </div>
-            
-            <div class="exercise-weight-group">
-                <label class="field-label">Weight Range (kg)</label>
-                <div class="range-container">
-                    <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Minimum weight">
-                    <span class="range-dash">to</span>
-                    <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Maximum weight">
+                
+                <div class="exercise-field">
+                    <label class="field-label">Sets</label>
+                    <input type="number" placeholder="3" name="sets" min="1" required>
+                </div>
+                
+                <div class="exercise-field">
+                    <label class="field-label">Reps Range</label>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="8" name="minReps" min="1" title="Min reps">
+                        <span class="range-separator">-</span>
+                        <input type="number" placeholder="12" name="maxReps" min="1" title="Max reps">
+                    </div>
+                </div>
+                
+                <div class="exercise-field">
+                    <label class="field-label">Weight Range (kg)</label>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Min weight">
+                        <span class="range-separator">-</span>
+                        <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Max weight">
+                    </div>
                 </div>
             </div>
             
