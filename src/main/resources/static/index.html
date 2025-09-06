@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fit4Ever - Fitness Dashboard</title>
-    <!-- Version: Clean 2x2 Grid Layout v8 -->
-    <link rel="stylesheet" href="styles.css?v=8">
+    <!-- Version: Fixed Modal Height with Sticky Buttons v9 -->
+    <link rel="stylesheet" href="styles.css?v=9">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -276,65 +276,67 @@
                 <button class="modal-close" onclick="closeModal('workoutModal')">&times;</button>
             </div>
             <form id="workoutForm">
-                <div class="form-group">
-                    <label for="workoutTitle">Title</label>
-                    <input type="text" id="workoutTitle" name="title" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="workoutDate">Date</label>
-                    <input type="date" id="workoutDate" name="date" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="workoutNotes">Notes</label>
-                    <textarea id="workoutNotes" name="notes" rows="3"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>Exercises</label>
-                    <div id="exercisesList" class="exercises-list">
-                        <div class="exercise-item">
-                            <div class="exercise-grid">
-                                <div class="exercise-field">
-                                    <label class="field-label">Exercise Name</label>
-                                    <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
-                                </div>
-                                
-                                <div class="exercise-field">
-                                    <label class="field-label">Sets</label>
-                                    <input type="number" placeholder="3" name="sets" min="1" required>
-                                </div>
-                                
-                                <div class="exercise-field">
-                                    <label class="field-label">Reps Range</label>
-                                    <div class="range-inputs">
-                                        <input type="number" placeholder="8" name="minReps" min="1" title="Min reps">
-                                        <span class="range-separator">-</span>
-                                        <input type="number" placeholder="12" name="maxReps" min="1" title="Max reps">
+                <div class="modal-form-content">
+                    <div class="form-group">
+                        <label for="workoutTitle">Title</label>
+                        <input type="text" id="workoutTitle" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="workoutDate">Date</label>
+                        <input type="date" id="workoutDate" name="date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="workoutNotes">Notes</label>
+                        <textarea id="workoutNotes" name="notes" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Exercises</label>
+                        <div id="exercisesList" class="exercises-list">
+                            <div class="exercise-item">
+                                <div class="exercise-grid">
+                                    <div class="exercise-field">
+                                        <label class="field-label">Exercise Name</label>
+                                        <input type="text" placeholder="e.g., Bench Press" name="exerciseName" required>
+                                    </div>
+                                    
+                                    <div class="exercise-field">
+                                        <label class="field-label">Sets</label>
+                                        <input type="number" placeholder="3" name="sets" min="1" required>
+                                    </div>
+                                    
+                                    <div class="exercise-field">
+                                        <label class="field-label">Reps Range</label>
+                                        <div class="range-inputs">
+                                            <input type="number" placeholder="8" name="minReps" min="1" title="Min reps">
+                                            <span class="range-separator">-</span>
+                                            <input type="number" placeholder="12" name="maxReps" min="1" title="Max reps">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="exercise-field">
+                                        <label class="field-label">Weight Range (kg)</label>
+                                        <div class="range-inputs">
+                                            <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Min weight">
+                                            <span class="range-separator">-</span>
+                                            <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Max weight">
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <div class="exercise-field">
-                                    <label class="field-label">Weight Range (kg)</label>
-                                    <div class="range-inputs">
-                                        <input type="number" placeholder="20" name="minWeight" min="0" step="0.5" title="Min weight">
-                                        <span class="range-separator">-</span>
-                                        <input type="number" placeholder="25" name="maxWeight" min="0" step="0.5" title="Max weight">
-                                    </div>
+                                <div class="exercise-actions">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)" title="Remove exercise">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
-                            </div>
-                            
-                            <div class="exercise-actions">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeExercise(this)" title="Remove exercise">
-                                    <i class="fas fa-trash"></i>
-                                </button>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-outline" onclick="addExercise()">
+                            <i class="fas fa-plus"></i> Add Exercise
+                        </button>
                     </div>
-                    <button type="button" class="btn btn-outline" onclick="addExercise()">
-                        <i class="fas fa-plus"></i> Add Exercise
-                    </button>
                 </div>
                 
                 <div class="modal-actions">
@@ -353,46 +355,48 @@
                 <button class="modal-close" onclick="closeModal('nutritionModal')">&times;</button>
             </div>
             <form id="nutritionForm">
-                <div class="form-group">
-                    <label for="foodDate">Date</label>
-                    <input type="date" id="foodDate" name="date" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="mealType">Meal Type</label>
-                    <select id="mealType" name="mealType" required>
-                        <option value="">Select meal type</option>
-                        <option value="BREAKFAST">Breakfast</option>
-                        <option value="LUNCH">Lunch</option>
-                        <option value="DINNER">Dinner</option>
-                        <option value="SNACK">Snack</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="itemName">Food Item</label>
-                    <input type="text" id="itemName" name="itemName" required>
-                </div>
-                
-                <div class="nutrition-inputs">
+                <div class="modal-form-content">
                     <div class="form-group">
-                        <label for="calories">Calories</label>
-                        <input type="number" id="calories" name="calories" min="0" required>
+                        <label for="foodDate">Date</label>
+                        <input type="date" id="foodDate" name="date" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="protein">Protein (g)</label>
-                        <input type="number" id="protein" name="protein" min="0" step="0.1" required>
+                        <label for="mealType">Meal Type</label>
+                        <select id="mealType" name="mealType" required>
+                            <option value="">Select meal type</option>
+                            <option value="BREAKFAST">Breakfast</option>
+                            <option value="LUNCH">Lunch</option>
+                            <option value="DINNER">Dinner</option>
+                            <option value="SNACK">Snack</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="carbs">Carbs (g)</label>
-                        <input type="number" id="carbs" name="carbs" min="0" step="0.1" required>
+                        <label for="itemName">Food Item</label>
+                        <input type="text" id="itemName" name="itemName" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="fat">Fat (g)</label>
-                        <input type="number" id="fat" name="fat" min="0" step="0.1" required>
+                    <div class="nutrition-inputs">
+                        <div class="form-group">
+                            <label for="calories">Calories</label>
+                            <input type="number" id="calories" name="calories" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="protein">Protein (g)</label>
+                            <input type="number" id="protein" name="protein" min="0" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="carbs">Carbs (g)</label>
+                            <input type="number" id="carbs" name="carbs" min="0" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fat">Fat (g)</label>
+                            <input type="number" id="fat" name="fat" min="0" step="0.1" required>
+                        </div>
                     </div>
                 </div>
                 
@@ -412,29 +416,31 @@
                 <button class="modal-close" onclick="closeModal('goalModal')">&times;</button>
             </div>
             <form id="goalForm">
-                <div class="form-group">
-                    <label for="goalType">Goal Type</label>
-                    <select id="goalType" name="type" required>
-                        <option value="">Select goal type</option>
-                        <option value="WEIGHT">Weight Goal</option>
-                        <option value="WORKOUTS_PER_WEEK">Workouts Per Week</option>
-                        <option value="CALORIES">Daily Calories</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="targetValue">Target Value</label>
-                    <input type="number" id="targetValue" name="targetValue" min="0" step="0.1" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="startDate">Start Date</label>
-                    <input type="date" id="startDate" name="startDate" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="endDate">End Date</label>
-                    <input type="date" id="endDate" name="endDate" required>
+                <div class="modal-form-content">
+                    <div class="form-group">
+                        <label for="goalType">Goal Type</label>
+                        <select id="goalType" name="type" required>
+                            <option value="">Select goal type</option>
+                            <option value="WEIGHT">Weight Goal</option>
+                            <option value="WORKOUTS_PER_WEEK">Workouts Per Week</option>
+                            <option value="CALORIES">Daily Calories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="targetValue">Target Value</label>
+                        <input type="number" id="targetValue" name="targetValue" min="0" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate" required>
+                    </div>
                 </div>
                 
                 <div class="modal-actions">
