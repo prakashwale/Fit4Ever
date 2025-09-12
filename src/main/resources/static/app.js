@@ -914,7 +914,7 @@ class Fit4EverApp {
 
     showAuthModal(mode = 'login') {
         // Set the auth mode (login or register)
-        this.setAuthMode(mode);
+        this.switchAuthTab(mode);
         this.showModal('authModal');
         
         // Prevent modal from closing when clicking outside
