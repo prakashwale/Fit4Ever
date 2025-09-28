@@ -469,6 +469,53 @@ body {
     font-size: 0.8rem;
 }
 
+.btn-google {
+    background: white;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.btn-google:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google svg {
+    margin-right: 8px;
+}
+
+/* Auth Divider */
+.auth-divider {
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.auth-divider span {
+    background: var(--card-bg);
+    padding: 0 1rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1;
+}
+
 /* Forms */
 .form-group {
     margin-bottom: 1.5rem;

@@ -1,0 +1,31 @@
+# Directories
+target/
+.mvn/
+.git/
+.idea/
+.vscode/
+node_modules/
+
+# Files
+*.md
+.gitignore
+.dockerignore
+Dockerfile*
+mvnw
+mvnw.cmd
+*.iml
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+Procfile
+
+# Environment files
+.env
+.env.local
+.env.*.local

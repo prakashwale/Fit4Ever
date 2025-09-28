@@ -1033,7 +1033,47 @@ function toggleNav() {
     navMenu.classList.toggle('active');
 }
 
+// OAuth2 Functions
+function loginWithGoogle() {
+    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const baseURL = isDevelopment 
+        ? 'http://localhost:8080' 
+        : `${window.location.protocol}//${window.location.host}`;
+    
+    window.location.href = `${baseURL}/oauth2/authorization/google`;
+}
+
+// Check for OAuth2 token in URL parameters
+function checkOAuth2Token() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const authType = urlParams.get('auth');
+    
+    if (token && authType === 'oauth2') {
+        // Store the token
+        localStorage.setItem('fit4ever_token', token);
+        
+        // Clean the URL
+        window.history.replaceState({}, document.title, '/');
+        
+        // Show success message
+        showToast('Successfully logged in with Google!', 'success');
+        
+        // Reload the app to initialize with the new token
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+        
+        return true;
+    }
+    return false;
+}
+
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new Fit4EverApp();
+    // Check for OAuth2 token first
+    if (!checkOAuth2Token()) {
+        // Only initialize app if not handling OAuth2 redirect
+        window.app = new Fit4EverApp();
+    }
 });

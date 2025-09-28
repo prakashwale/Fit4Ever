@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: fit4ever-postgres
+    environment:
+      POSTGRES_DB: fit4ever
+      POSTGRES_USER: fit4ever_user
+      POSTGRES_PASSWORD: fit4ever_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fit4ever-network
+
+  # Spring Boot Application
+  app:
+    build: .
+    container_name: fit4ever-app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/fit4ever?user=fit4ever_user&password=fit4ever_password
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production-make-it-very-long-and-secure
+    ports:
+      - "8080:8080"
+    networks:
+      - fit4ever-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  fit4ever-network:
+    driver: bridge
