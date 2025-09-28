@@ -14,18 +14,7 @@ spring:
     console:
       enabled: true
       path: /h2-console
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "health,info,metrics"
-
-server:
-  port: 8080
-
-# OAuth2 Configuration
-spring:
+  # OAuth2 Configuration
   security:
     oauth2:
       client:
@@ -44,5 +33,14 @@ spring:
             token-uri: https://www.googleapis.com/oauth2/v4/token
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             user-name-attribute: sub
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics"
+
+server:
+  port: 8080
 
 # Swagger UI available at /swagger-ui.html

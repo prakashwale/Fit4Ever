@@ -14,17 +14,8 @@ spring:
       ddl-auto: update
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-      
-# JWT Configuration
-jwt:
-  secret: ${JWT_SECRET:your-super-secret-jwt-key-change-this-in-production}
-  expiration: 86400000 # 24 hours
-
-server:
-  port: ${PORT:8080}
-
-# OAuth2 Configuration for Production
-spring:
+  
+  # OAuth2 Configuration for Production
   security:
     oauth2:
       client:
@@ -37,3 +28,11 @@ spring:
               - profile
               - email
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+      
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:your-super-secret-jwt-key-change-this-in-production}
+  expiration: 86400000 # 24 hours
+
+server:
+  port: ${PORT:8080}
