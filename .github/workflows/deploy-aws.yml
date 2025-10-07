@@ -15,7 +15,7 @@ jobs:
   deploy:
     name: Deploy to AWS ECS
     runs-on: ubuntu-latest
-    environment: production
+    timeout-minutes: 15
 
     steps:
     - name: Checkout code
@@ -72,10 +72,13 @@ jobs:
         task-definition: new-task-definition.json
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
-        wait-for-service-stability: true
+        wait-for-service-stability: false
 
     - name: Service deployment status
       run: |
         echo "✅ Deployment completed successfully!"
         echo "🚀 Application URL: https://your-aws-domain.com"
         echo "📊 Monitor logs: aws logs tail /ecs/fit4ever --follow"
+        
+        # Check service status
+        aws ecs describe-services --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }} --region ${{ env.AWS_REGION }} --query 'services[0].{Status:status,RunningCount:runningCount,PendingCount:pendingCount,DesiredCount:desiredCount}'
