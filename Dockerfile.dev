@@ -1,0 +1,18 @@
+# Development Dockerfile for faster iterations
+FROM maven:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy pom.xml and download dependencies (cached layer)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Expose port
+EXPOSE 8080
+
+# Run in development mode with hot reload
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.jvmArguments='-Xmx512m -Xms256m'"]

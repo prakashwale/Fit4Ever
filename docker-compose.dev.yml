@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  fit4ever-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src
+      - ./pom.xml:/app/pom.xml
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+    networks:
+      - fit4ever-network
+
+networks:
+  fit4ever-network:
+    driver: bridge
