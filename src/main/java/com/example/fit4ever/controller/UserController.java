@@ -1,5 +1,6 @@
 package com.example.fit4ever.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @GetMapping("/me")
-    public Object me(Authentication auth) {
-        return new MeResponse(auth.getName()); // email from JWT
+    public ResponseEntity<MeResponse> me(Authentication auth) {
+        return ResponseEntity.ok(new MeResponse(auth.getName()));
     }
 
     record MeResponse(String email) {}

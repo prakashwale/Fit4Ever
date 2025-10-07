@@ -270,7 +270,7 @@ class Fit4EverApp {
         if (goals.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <i class="fas fa-target"></i>
+                    <i class="fas fa-bullseye"></i>
                     <p>Set your first goal to track progress!</p>
                 </div>
             `;
@@ -791,7 +791,7 @@ class Fit4EverApp {
         if (goals.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <i class="fas fa-target"></i>
+                    <i class="fas fa-bullseye"></i>
                     <p>No goals set. Create your first goal!</p>
                 </div>
             `;
